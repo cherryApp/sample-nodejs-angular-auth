@@ -1,29 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../model/User");
-
-// Beléptetjük a frissen regisztrált felhasználót.
-var authenticate = User.authenticate();
-var auth = (username, password, callBack) => {
-  authenticate(username, password, function(err, result) {
-    if (err) {
-      return callBack({ error: "User not athenticated." });
-    }
-    // Sikeres belépés esetén visszaküldjük a felhasználó adatait.
-    callBack(null);
-  });
-};
+var auth = require("../module/auth");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
-  res.send("respond with a resource");
+  User.find({}, (err, data) => {
+    res.json(data);
+  });
 });
 
 /**
  * Register new user.
  */
 router.post("/register", (req, res, next) => {
-  // Registráljuk az új felhalsználót, a post body adatai alapján
+  // Regisztráljuk az új felhalsználót, a post body adatai alapján
   User.register(
     {
       username: req.body.username,
@@ -48,10 +39,18 @@ router.post("/register", (req, res, next) => {
 });
 
 /**
- * Felhasznál beléptetése.
+ * Felhasználó beléptetése.
  */
 router.post('/login', (req, res, next) => {
+  auth(req.body.username, req.body.password, (err, user) => {
+    if (err) { 
+      return res.json(err); 
+    }
 
+    delete user.hash;
+    delete user.salt;
+    res.json({ user: user });
+  });
 });
 
 module.exports = router;

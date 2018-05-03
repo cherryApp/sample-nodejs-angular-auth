@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var auth = require('./module/auth');
+var User = require('./model/User');
 
 // Csatlakozás a mongoDB, auth nevű adatbázisához.
 const mongoose = require('mongoose');
@@ -22,11 +25,21 @@ app.use(require('express-session')({ secret: 'little dad', resave: true, saveUni
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Authentikáció.
+app.use( (req, res, next) => {
+  console.log( req.isAuthenticated() );
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
