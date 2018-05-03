@@ -5,6 +5,8 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 // User séma létrehozása.
 const User = new Schema({
+    username: String,
+    password: String,
     email: String,
     address: String
 });
