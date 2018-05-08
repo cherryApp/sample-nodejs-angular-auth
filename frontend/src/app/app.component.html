@@ -1,0 +1,37 @@
+<app-nav></app-nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div class="card login-card">
+        <div class="card-header">
+          Lépjen be
+        </div>
+        <div class="card-body">
+          <form novalidate (ngSubmit)="doLogin()">
+            <div class="form-group">
+              <label for="">Felhasználónév</label>
+              <input
+                name="username"
+                [(ngModel)]="loginData.username"
+                #usernameModel="ngModel"
+                type="text" class="form-control"
+                required>
+              <div [hidden]="usernameModel.valid || usernameModel.pristine"
+                class="error-message">Adja meg a felhasználónevet.</div>
+            </div>
+            <div class="form-group">
+              <label for="">Jelszó</label>
+              <input name="password" [(ngModel)]="loginData.password"
+                type="password" class="form-control"
+                #passwordModel="ngModel" required>
+              <div [hidden]="passwordModel.valid || passwordModel.pristine"
+                class="error-message">Adja meg a jelszót.</div>
+            </div>
+            <button class="btn btn-primary">belépés</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

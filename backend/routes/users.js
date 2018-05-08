@@ -40,7 +40,8 @@ router.post("/register", (req, res, next) => {
  * Felhasználó beléptetése.
  */
 router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    console.log(req.sessionID);
+    res.json({ sessionID: req.sessionID });
 });
 
 /**
