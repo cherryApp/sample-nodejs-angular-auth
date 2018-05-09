@@ -7,8 +7,9 @@ describe('frontend App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display login message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    // expect(compiled.querySelector('.card-header').textContent).toContain('Lépjen be');
+    expect(page.getLoginTitle()).toContain('Lépjen be');
   });
 });
