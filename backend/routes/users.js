@@ -52,4 +52,11 @@ router.get('/logout', function(req, res) {
   res.status(203).json({ success: 'logged out' });
 });
 
+/**
+ * Felhasználó állapotának lekérése.
+ */
+router.get('/profile', (req, res) => {
+  res.json( {test: 'test' } );
+});
+
 module.exports = router;

@@ -5,8 +5,10 @@ export class User {
   address: String;
 
   constructor( userData: {} = {} ) {
-    for (let k in userData) {
-      this[k] = userData[k];
+    if (userData) {
+      for (const k of Object.keys(userData)) {
+        this[k] = userData[k];
+      }
     }
   }
 }
