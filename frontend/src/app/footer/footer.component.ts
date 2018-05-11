@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   copyRight = '&copy; 2018 cherryApp';
-  sticky : boolean = false;
+  sticky : boolean = true;
   constructor() { }
 
   ngOnInit() {
